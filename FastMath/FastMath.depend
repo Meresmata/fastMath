@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1464971230 source:c:\users\sebastian\documents\programmierung\c++ - arduino\fastmath2\driver\main.cpp
+	".\..\fastMath.h"
+	<cmath>
+	<stdio.h>
+	<iostream>
+
+1464970212 c:\users\sebastian\documents\programmierung\c++ - arduino\fastmath2\fastmath.h
+	<stdbool.h>
+	<limits.h>
+	<stdint.h>
+	<avr/pgmspace.h>
+
+1464970207 source:c:\users\sebastian\documents\programmierung\c++ - arduino\fastmath2\fastmath.cpp
+	"fastMath.h"
+
