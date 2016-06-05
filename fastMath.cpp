@@ -4,13 +4,13 @@
 #ifndef FASTMATH_CPP
 #define FASTMATH_CPP
 
-float fmath::cos(float angle){
+float fmath::cos(const float inAngle){
 	signed char factor = 1;
-	float result = 0.0;
+	float result = 0.0F;
 
 	//using the integer instead of double causes
 	//about 0.3% deviation, so it's acceptable
-	unsigned int intAngleDeg = static_cast<unsigned>(fAbs<float>(toDeg(angle)));
+	unsigned int intAngleDeg = static_cast<unsigned>(fAbs<float>(toDeg(inAngle)));
 
 	if (intAngleDeg > 360)
 	{

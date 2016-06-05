@@ -44,6 +44,7 @@ namespace fmath {
 #else
 
 	const float PI = 3.1415926535897932384626433832795F;
+	const float HALFPI = PI / 2;
 
 	//results of cos_fn 
 	const float CosArray[] = { 1.0F, 0.999848F, 0.999391F, 0.998630F, 0.997564F,
@@ -79,10 +80,10 @@ namespace fmath {
 
 	//faster but less precise calculation of cosine
 	//max error of 0.5° 
-	float cos(float angle);
+	float cos(const float inAngle);
 
 	//faster but less precise calculation of sin
-	float inline sin(float angle) { return fmath::cos((angle + PI)); };
+	float inline sin(float angle) { return fmath::cos((angle - HALFPI)); };
 
 	//faster but less precise calculation of tangens
 	//average error: 0.08°
