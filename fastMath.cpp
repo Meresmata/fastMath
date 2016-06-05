@@ -4,7 +4,7 @@
 #ifndef FASTMATH_CPP
 #define FASTMATH_CPP
 
-float fastmath::cos(float angle){
+float fmath::cos(float angle){
 	signed char factor = 1;
 	float result = 0.0;
 
@@ -36,13 +36,13 @@ float fastmath::cos(float angle){
     return result;
 };
 
-float fastmath::atan(float arcAngle){
+float fmath::atan(float arcAngle){
 	const float maxAngle = static_cast<float>(UINT_MAX) / 1000;
 
 	if (arcAngle >= maxAngle)
-		return 1.555538;
+		return 1.555538F;
 	else if ((-arcAngle) >= maxAngle)
-		return (-1.555538);
+		return (-1.555538F);
 	else {
 
 			unsigned int leftCompare = 0;
@@ -62,7 +62,7 @@ float fastmath::atan(float arcAngle){
 
 			//only special case inVale exceeds every limit for every Taylor-Polynome
 			if (arcInt >57290)//atanLimits[(tanMaxIndex - 1)]
-				return factor *1.55334; //atanValues[0][tanMaxIndex - 1]
+				return factor *1.55334F; //atanValues[0][tanMaxIndex - 1]
 
 
 			//can't be smaller than zero
@@ -86,7 +86,7 @@ float fastmath::atan(float arcAngle){
 					return arcAngle;
 				//special case case cut off
 				else if (index == lastIndex)
-					return 1.55334;
+					return 1.55334F;
 				else
 					return (atanValues[0][index] + atanValues[1][index] * arcAngle);
 			}
@@ -97,14 +97,14 @@ float fastmath::atan(float arcAngle){
 					return  (-arcAngle);
 				//special case case cut off
 				else if (index == lastIndex)
-					return (-1.55334);
+					return (-1.55334F);
 				else
 				return (-atanValues[0][index] - atanValues[1][index] * arcAngle);
 			}
 	}
 }
 
-float fastmath::atan2(const float x, const float y){
+float fmath::atan2(const float x, const float y){
 
 	//speeding up with integer is not used, because of the creation of special cases...
 	//first has to check, where integer applicable and then where it is not
@@ -112,11 +112,11 @@ float fastmath::atan2(const float x, const float y){
 
 		if ((y <= 0.00001) && (y >= -0.0001)) {
 			if ((x >= 0.00001))
-				return 1.555538;
+				return 1.555538F;
 			else if (x <= -0.00001)
-				return 1.555538;
+				return 1.555538F;
 			else
-				return 0.0;
+				return 0.0F;
 		
 	}
 	else {
@@ -127,11 +127,11 @@ float fastmath::atan2(const float x, const float y){
 			if (y >= 0)
 				return atan(slope);
 			else
-				return atan(slope) + 1.5707963268 /*  PI/2  */;
+				return atan(slope) + 1.5707963268F /*  PI/2  */;
 		}
 		else {
 			if (y >= 0)
-				return atan(slope) + 4.7123889804 /*3* PI /2*/;
+				return atan(slope) + 4.7123889804F /*3* PI /2*/;
 			else
 				return atan(slope) + PI;
 		}
