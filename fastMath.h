@@ -1,10 +1,17 @@
 #ifndef FASTMATH_H
 #define FASTMATH_H
 
+
 #define tanMaxIndex  17
+//#define acosMaxIndex 31
+#define acosMaxIndex 15
 #include <stdbool.h>
 #include <limits.h>
 #include <stdint.h>
+
+
+#define matherr 0.0F
+
 
 namespace fmath {
 
@@ -34,17 +41,33 @@ namespace fmath {
 		0.000000 };
 
 	//array to select right element of atanValues
-	const unsigned int atanLimits[tanMaxIndex] = { 0, 324,       726,      1000,     1376,      1962,     2414,     3077,      4165,      6313,      8448,       12705,      16956,      25450,      28635,      38186,       57290 };
+	const unsigned short atanLimits[tanMaxIndex] PROGMEM = { 0, 324,       726,      1000,     1376,      1962,     2414,     3077,      4165,      6313,      8448,       12705,      16956,      25450,      28635,      38186,       57290 };
 
 	/*atan = m x +n,
 	m - second row
 	n - first row*/
-	const float atanValues[2][tanMaxIndex] = { { 0, 0.0202666, 0.15279,  0.285398, 0.466948,  0.695047, 0.824542, 0.962743,  1.10818,   1.25921,   1.33626,    1.41404,    1.45312,    1.49229,    1.50101,    1.51845,     1.55334 },
+	const float atanValues[2][tanMaxIndex] PROGMEM = { { 0, 0.0202666, 0.15279,  0.285398, 0.466948,  0.695047, 0.824542, 0.962743,  1.10818,   1.25921,   1.33626,    1.41404,    1.45312,    1.49229,    1.50101,    1.51845,     1.55334 },
 											 { 1, 0.904509,  0.654509, 0.50000,  0.345492,  0.206108, 0.146447, 0.0954921, 0.0544972, 0.0244721, 0.0138153,  0.00615603, 0.00346592, 0.00154143, 0.00121807, 0.000685301, 0 } };
+
+
+	//array to select right element of acosValues
+	/*const unsigned short acosLimits[acosMaxIndex] PROGMEM = { 0x4000, 0x2000, 0x6000, 0x1000, 0x3000, 0x5000, 0x7000, 0x0800, 0x1800, 0x2800, 0x3800, 0x4800, 0x5800, 0x6800, 0x7800,
+															0x0400, 0x0c00, 0x1400, 0x1c00, 0x2400, 0x2c00, 0x3400, 0x3c00, 0x4400, 0x4c00, 0x5400, 0x5c00, 0x6400, 0x6c00, 0x7400, 0x7c00 };*/
+
+	const unsigned char acosLimits[acosMaxIndex] = { 0x40, 0x20, 0x60, 0x10, 0x30, 0x50, 0x70, 0x08, 0x18, 0x28, 0x38, 0x48, 0x58, 0x68, 0x78/*,
+													 0x04, 0x0c, 0x14, 0x1c, 0x24, 0x2c, 0x34, 0x3c, 0x44, 0x4c, 0x54, 0x5c, 0x64, 0x6c, 0x74, 0x7c*/ };
+
+	/*acos = m x +n,
+	m - second row
+	n - first row*/
+	const float acosValues[2][acosMaxIndex] PROGMEM = { { 1.624, 1.576, 1.875, 1.571, 1.636, 1.557, 2.313, 1.571, 1.573, 1.582, 1.605, 1.653, 1.760, 2.015, 3.0490/*,
+														 1.5708, 1.5745, 1.5721, 1.574, 1.5729, 1.5860, 1.597, 1.6138, 1.6377, 1.6729, 1.7247, 1.8026, 1.9257, 2.1386, 2.5802, 4.1563*/ },
+														 { 1.158, 1.033, 1.512, 1.008, 1.057, 1.058, 2.066, 1.002, 1.018, 1.053, 1.112, 1.209, 1.377, 1.715, 2.874/*,
+														 1.000, 1.0044, 1.0124, 1.0248, 1.0421, 1.0649, 1.0944, 1.1321, 1.1803, 1.2428, 1.3253, 1.4383, 1.6020, 1.8631, 2.3655, 4.0316*/ } };
+
 #else
 
 	const float PI = 3.1415926535897932384626433832795F;
-	const float HALFPI = PI / 2;
 
 	//results of cos_fn 
 	const float CosArray[] = { 1.0F, 0.999848F, 0.999391F, 0.998630F, 0.997564F,
@@ -68,7 +91,7 @@ namespace fmath {
 	0.000000F };
 
 	//array to select right element of atanValues
-	const unsigned int atanLimits[tanMaxIndex] = { 0, 324,       726,      1000,     1376,     1962,     2414,     3077,      4165,      6313,      8448,      12705,      16956,      25450,      28635,      38186,       57290 };
+	const unsigned short atanLimits[tanMaxIndex] = { 0, 324,       726,      1000,     1376,     1962,     2414,     3077,      4165,      6313,      8448,      12705,      16956,      25450,      28635,      38186,       57290 };
 
 	/*atan = m x +n,
 	m - second row
@@ -76,7 +99,24 @@ namespace fmath {
 	const float atanValues[2][tanMaxIndex] = { { 0.0F, 0.0202666F, 0.15279F,  0.285398F, 0.466948F, 0.695047F, 0.824542F, 0.962743F,  1.10818F,   1.25921F,   1.33626F,   1.41404F,    1.45312F,    1.49229F,    1.50101F,    1.51845F,     1.55334F },
 											 { 1.0F, 0.904509F,  0.654509F, 0.50000F,  0.345492F, 0.206108F, 0.146447F, 0.0954921F, 0.0544972F, 0.0244721F, 0.0138153F, 0.00615603F, 0.00346592F, 0.00154143F, 0.00121807F, 0.000685301F, 0.0F } };
 
+	//array to select right element of acosValues
+	/*const unsigned short acosLimits[acosMaxIndex] = { 0x4000, 0x2000, 0x6000, 0x1000, 0x3000, 0x5000, 0x7000, 0x0800, 0x1800, 0x2800, 0x3800, 0x4800, 0x5800, 0x6800, 0x7800,
+													0x0400, 0x0c00, 0x1400, 0x1c00, 0x2400, 0x2c00, 0x3400, 0x3c00, 0x4400, 0x4c00, 0x5400, 0x5c00, 0x6400, 0x6c00, 0x7400, 0x7c00};*/
+
+	const unsigned char acosLimits[acosMaxIndex] = { 0x40, 0x20, 0x60, 0x10, 0x30, 0x50, 0x70, 0x08, 0x18, 0x28, 0x38, 0x48, 0x58, 0x68, 0x78/*,
+													0x04, 0x0c, 0x14, 0x1c, 0x24, 0x2c, 0x34, 0x3c, 0x44, 0x4c, 0x54, 0x5c, 0x64, 0x6c, 0x74, 0x7c*/ };
+
+
+	/*acos = m x +n,
+	m - second row
+	n - first row*/
+	const float acosValues[2][acosMaxIndex] = { {1.624F, 1.576F, 1.875F, 1.571F, 1.636F, 1.557F, 2.313F, 1.571F, 1.573F, 1.582F, 1.605F, 1.653F, 1.760F, 2.015F, 3.0490F/*,
+												1.5708F, 1.5745F, 1.5721F, 1.574F, 1.5729F, 1.5860F, 1.597F, 1.6138F, 1.6377F, 1.6729F, 1.7247F, 1.8026F, 1.9257F, 2.1386F, 2.5802F, 4.1563F*/},
+											 {  1.158F, 1.033F, 1.512F, 1.008F, 1.057F, 1.058F, 2.066F, 1.002F, 1.018F, 1.053F, 1.112F, 1.209F, 1.377F, 1.715F, 2.874F/*,
+												1.000F, 1.0044F, 1.0124F, 1.0248F, 1.0421F, 1.0649F, 1.0944F, 1.1321F, 1.1803F, 1.2428F, 1.3253F, 1.4383F, 1.6020F, 1.8631F, 2.3655F, 4.0316F*/} };
+
 #endif
+	const float HALFPI = PI / 2;
 
 	//faster but less precise calculation of cosine
 	//max error of 0.5° 
@@ -85,6 +125,11 @@ namespace fmath {
 	//faster but less precise calculation of sin
 	float inline sin(float angle) { return fmath::cos((angle - HALFPI)); };
 
+
+	float acos(const float arcAngle);
+	
+	float inline asin(float arcAngle){ return (HALFPI - fmath::acos(arcAngle));}
+	
 	//faster but less precise calculation of tangens
 	//average error: 0.08°
 	//max. error: 0.6°
@@ -97,20 +142,24 @@ namespace fmath {
 	// if ownly y nearly zero returns +/- PI/2
 	float atan2(const float x, const float y);
 
+#ifndef abs
 	//computes the absolute of any value, using templates
 	template<typename inType = short>
-	inType fAbs(inType x){
-		if (x > 0)
+	inType abs(inType x){
+		if (x >= 0)
 			return x;
 		else
 			return (-x);
 	};
+#endif
 
 	//computes degrees in RAD from DEG
-	float inline toRad(float deg) { return (1.7453292519943295769e-2F/*  PI/180  */)*deg; };
+	float inline toRad(const float deg) { return (1.7453292519943295769e-2F/*  PI/180  */)*deg; };
 
 	//computes degrees in DEG from RAD
-	float inline toDeg(float rad) { return  57.2957795130823208767F /*  180/PI   */ *rad; };
+	float inline toDeg(const float rad) { return  57.2957795130823208767F /*  180/PI   */ *rad; };
+	
+	float inline sqr(const float inNumber) { return inNumber * inNumber; }
 }//namespace fastmath
 #endif // FASTMATH_H
 
